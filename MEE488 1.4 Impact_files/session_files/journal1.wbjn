@@ -1,0 +1,74 @@
+# encoding: utf-8
+# 2022 R2
+SetScriptVersion(Version="22.2.192")
+template1 = GetTemplate(TemplateName="Geometry")
+system1 = template1.CreateSystem()
+system1.DisplayText = "quarter anvil"
+Save(Overwrite=True)
+template2 = GetTemplate(
+    TemplateName="Transient Structural",
+    Solver="ANSYS")
+geometryComponent1 = system1.GetComponent(Name="Geometry")
+system2 = template2.CreateSystem(
+    ComponentsToShare=[geometryComponent1],
+    Position="Right",
+    RelativeTo=system1)
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/alexn/Downloads/MEE 488 -Mech Engineering Design I/MEE 488 Concept V2 ANSYS/impact anvil 2.1.STEP")
+geometry1.Edit()
+system3 = template1.CreateSystem(
+    Position="Below",
+    RelativeTo=system1)
+system3.DisplayText = "quarter anvil 2"
+geometry2 = system3.GetContainer(ComponentName="Geometry")
+geometry2.SetFile(FilePath="C:/Users/alexn/Downloads/MEE 488 -Mech Engineering Design I/MEE 488 Concept V2 ANSYS/Impact Anvil 2.2.STEP")
+template3 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+geometryComponent2 = system3.GetComponent(Name="Geometry")
+system4 = template3.CreateSystem(
+    ComponentsToShare=[geometryComponent2],
+    Position="Right",
+    RelativeTo=system3)
+modelComponent1 = system4.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system4.GetContainer(ComponentName="Model")
+model1.Edit()
+geometry2.Edit()
+Save(Overwrite=True)
+Save(Overwrite=True)
+Save(Overwrite=True)
+geometry1.Exit()
+geometryComponent2.Update(AllDependencies=True)
+geometry2.Exit()
+model1.Exit()
+geometry2.Edit()
+geometry2.Exit()
+geometryComponent2.UpdateUpstreamComponents()
+geometry2.Edit()
+geometry2.Exit()
+system5 = template1.CreateSystem(
+    Position="Below",
+    RelativeTo=system3)
+system5.DisplayText = "anvil v2"
+geometry3 = system5.GetContainer(ComponentName="Geometry")
+geometry3.SetFile(FilePath="C:/Users/alexn/Downloads/MEE 488 -Mech Engineering Design I/MEE 488 Concept V2 ANSYS/Impact Anvil 2.2.STEP")
+geometryComponent3 = system5.GetComponent(Name="Geometry")
+system6 = template3.CreateSystem(
+    ComponentsToShare=[geometryComponent3],
+    Position="Right",
+    RelativeTo=system5)
+geometry3.Edit()
+geometry3.Exit()
+geometry3.SetFile(FilePath="C:/Users/alexn/Downloads/MEE 488 -Mech Engineering Design I/MEE 488 Concept V2 ANSYS/Impact Anvil 2.3.STEP")
+geometry3.Edit()
+modelComponent2 = system6.GetComponent(Name="Model")
+modelComponent2.Refresh()
+model2 = system6.GetContainer(ComponentName="Model")
+model2.Edit()
+model2.Exit()
+geometry3.Exit()
+modelComponent2.Refresh()
+model2.Edit()
+Save(Overwrite=True)
+Save(Overwrite=True)
